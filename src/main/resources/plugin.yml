@@ -1,0 +1,20 @@
+name: InvSeePNX
+version: "1.0.0"
+main: back.invsee.InvSeePlugin
+api: ["2.0.0"]
+author: Back
+description: "View and edit player inventories in real-time"
+depend: ["InvMenuPNX"]
+permissions:
+  invsee.inventory.view:
+    description: "View other players' inventories"
+    default: op
+  invsee.inventory.modify:
+    description: "Modify other players' inventories"
+    default: op
+  invsee.enderinventory.view:
+    description: "View other players' ender chests"
+    default: op
+  invsee.enderinventory.modify:
+    description: "Modify other players' ender chests"
+    default: op
