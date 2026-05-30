@@ -9,9 +9,7 @@ import cn.nukkit.command.data.CommandParamType;
 import cn.nukkit.command.data.CommandParameter;
 import cn.nukkit.command.tree.ParamList;
 import cn.nukkit.command.utils.CommandLogger;
-import cn.nukkit.entity.Entity;
 
-import java.util.List;
 import java.util.Map;
 
 public final class EnderInvSeeCommand extends Command {
@@ -19,12 +17,12 @@ public final class EnderInvSeeCommand extends Command {
     private final InvSeePlayerList playerList;
 
     public EnderInvSeeCommand(InvSeePlayerList playerList) {
-        super("enderinvsee", "View a player's ender chest", "/enderinvsee <player>");
+        super("enderinvsee", "View a player's ender chest", "/enderinvsee <name>");
         this.playerList = playerList;
         this.setPermission("invsee.enderinventory.view;invsee.enderinventory.view.self");
         this.commandParameters.clear();
         this.commandParameters.put("default", new CommandParameter[]{
-                CommandParameter.newType("player", CommandParamType.TARGET)
+                CommandParameter.newType("name", CommandParamType.STRING)
         });
         this.enableParamTree();
     }
@@ -41,14 +39,12 @@ public final class EnderInvSeeCommand extends Command {
             return 0;
         }
 
-        List<Entity> targets = result.getValue().getResult(0);
-        if (targets.isEmpty()) {
-            log.addNoTargetMatch().output();
+        String targetName = result.getValue().getResult(0);
+        if (targetName == null || targetName.isBlank()) {
+            log.addError("commands.generic.usage").output();
             return 0;
         }
 
-        Entity target = targets.get(0);
-        String targetName = target instanceof Player p ? p.getName() : target.getName();
         if (viewer.getName().equalsIgnoreCase(targetName)) {
             log.addError("You cannot view your own ender chest.").output();
             return 0;
